@@ -22,9 +22,10 @@ jobs:
 
       - name: Compile GnuBee Firmware
         run: |
+          cd uboot-*/
           export ARCH=mips
           export CROSS_COMPILE=mipsel-linux-gnu-
-          make GnuBee_uboot
+          make GnuBee_PCx_config
           make -j$(nproc)
 
       - name: Upload Flashable Artifacts
@@ -32,5 +33,5 @@ jobs:
         with:
           name: gnubee-uboot-binaries
           path: |
-            u-boot.bin
-            u-boot.img
+            uboot-*/u-boot.bin
+            uboot-*/u-boot.img

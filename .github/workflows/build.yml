@@ -24,7 +24,7 @@ jobs:
         run: |
           export ARCH=mips
           export CROSS_COMPILE=mipsel-linux-gnu-
-          make GnuBee_PCx_config
+          make GnuBee_uboot
           make -j$(nproc)
 
       - name: Upload Flashable Artifacts

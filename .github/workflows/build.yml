@@ -1,0 +1,34 @@
+name: GnuBee U-Boot Build
+on: [push, pull_request]
+
+jobs:
+  build-uboot:
+    runs-on: ubuntu-latest
+    
+    container:
+      image: debian:buster-slim
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Configure Legacy Repositories and Toolchain
+        run: |
+          # Configure apt overrides for archived Buster packages and install tools
+          echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
+          apt update && apt -y install make bison flex bc gcc-mipsel-linux-gnu
+
+      - name: Compile GnuBee Firmware
+        run: |
+          export ARCH=mips
+          export CROSS_COMPILE=mipsel-linux-gnu-
+          make GnuBee_PCx_config
+          make -j$(nproc)
+
+      - name: Upload Flashable Artifacts
+        uses: actions/artifacts@v4
+        with:
+          name: gnubee-uboot-binaries
+          path: |
+            u-boot.bin
+            u-boot.img

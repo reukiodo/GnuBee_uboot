@@ -22,10 +22,11 @@ jobs:
 
       - name: Compile GnuBee Firmware
         run: |
+          cp profiles/GB-PCx/GB-PCx-config-900MHz uboot-5.x.x.x/.config
           cd uboot-*/
           export ARCH=mips
           export CROSS_COMPILE=mipsel-linux-gnu-
-          make GnuBee_PCx_config
+          yes "" | make oldconfig
           make -j$(nproc)
 
       - name: Upload Flashable Artifacts

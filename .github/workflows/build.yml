@@ -26,7 +26,7 @@ jobs:
           cd uboot-*/
           export ARCH=mips
           export CROSS_COMPILE=mipsel-linux-gnu-
-          yes "" | make oldconfig
+          yes "" | make menuconfig
           make -j$(nproc)
 
       - name: Upload Flashable Artifacts

@@ -26,7 +26,7 @@ jobs:
           make -j$(nproc)
 
       - name: Upload Flashable Artifacts
-        uses: actions/artifacts@v4
+        uses: actions/upload-artifact@v4
         with:
           name: gnubee-uboot-binaries
           path: |
